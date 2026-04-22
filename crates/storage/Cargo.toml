@@ -1,0 +1,18 @@
+[package]
+name = "mimicrypt-storage"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+keyring.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+time.workspace = true
+uuid.workspace = true
+mimicrypt-bootstrap = { path = "../bootstrap" }
+mimicrypt-ratchet = { path = "../ratchet" }
+mimicrypt-reliability = { path = "../reliability" }
+mimicrypt-spec-types = { path = "../spec-types" }

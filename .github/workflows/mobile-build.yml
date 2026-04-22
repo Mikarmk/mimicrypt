@@ -1,0 +1,83 @@
+name: mobile-build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/desktop-tauri/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install frontend dependencies
+        working-directory: apps/desktop-tauri
+        run: npm install
+
+      - name: Init Android target
+        working-directory: apps/desktop-tauri
+        run: npx tauri android init
+
+      - name: Build Android APK / AAB
+        working-directory: apps/desktop-tauri
+        run: npx tauri android build --apk --aab
+
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimicrypt-android
+          path: |
+            apps/desktop-tauri/src-tauri/gen/android/app/build/outputs/**/*.apk
+            apps/desktop-tauri/src-tauri/gen/android/app/build/outputs/**/*.aab
+
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/desktop-tauri/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install frontend dependencies
+        working-directory: apps/desktop-tauri
+        run: npm install
+
+      - name: Init iOS target
+        working-directory: apps/desktop-tauri
+        run: npx tauri ios init
+
+      - name: Build iOS app shell
+        working-directory: apps/desktop-tauri
+        run: npx tauri ios build --export-method development
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimicrypt-ios
+          path: |
+            apps/desktop-tauri/src-tauri/gen/apple/build/**/*.app
+            apps/desktop-tauri/src-tauri/gen/apple/build/**/*.ipa

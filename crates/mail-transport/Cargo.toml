@@ -1,0 +1,16 @@
+[package]
+name = "mimicrypt-mail-transport"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+imap.workspace = true
+lettre.workspace = true
+native-tls.workspace = true
+serde.workspace = true
+time.workspace = true
+tokio.workspace = true
+uuid.workspace = true
+mimicrypt-spec-types = { path = "../spec-types" }

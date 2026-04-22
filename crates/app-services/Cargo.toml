@@ -1,0 +1,21 @@
+[package]
+name = "mimicrypt-app-services"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+time.workspace = true
+uuid.workspace = true
+mimicrypt-bootstrap = { path = "../bootstrap" }
+mimicrypt-crypto = { path = "../crypto" }
+mimicrypt-envelope = { path = "../envelope" }
+mimicrypt-ratchet = { path = "../ratchet" }
+mimicrypt-reliability = { path = "../reliability" }
+mimicrypt-storage = { path = "../storage" }
+mimicrypt-spec-types = { path = "../spec-types" }
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+mimicrypt-mail-transport = { path = "../mail-transport" }

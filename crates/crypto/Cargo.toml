@@ -1,0 +1,18 @@
+[package]
+name = "mimicrypt-crypto"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+bincode.workspace = true
+chacha20poly1305.workspace = true
+ed25519-dalek.workspace = true
+hkdf.workspace = true
+rand.workspace = true
+serde.workspace = true
+sha2.workspace = true
+x25519-dalek.workspace = true
+zeroize.workspace = true
+mimicrypt-spec-types = { path = "../spec-types" }
